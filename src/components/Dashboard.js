@@ -17,7 +17,6 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import BackupIcon from '@material-ui/icons/Backup';
 import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
@@ -25,6 +24,7 @@ import Orders from './Orders';
 import { useAuth } from "../contexts/AuthContext"
 import { useHistory } from 'react-router-dom'
 import PowerSettingsNewOutlinedIcon from '@material-ui/icons/PowerSettingsNewOutlined';
+import DropzoneAreaExample from './DropzoneAreaExample'
 
 function Copyright() {
   return (
@@ -141,11 +141,6 @@ export default function Dashboard() {
   
   }
 
-
-
-
-
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -163,11 +158,14 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          <IconButton color="inherit">
-            <Badge color="secondary">
+
+          <IconButton 
+          color="inherit">
+            <Badge color="secondary" onClick={handleLogout}>
               <PowerSettingsNewOutlinedIcon/>
             </Badge>
           </IconButton>
+
         </Toolbar>
       </AppBar>
       <Drawer
@@ -207,6 +205,11 @@ export default function Dashboard() {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Orders />
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <DropzoneAreaExample />
               </Paper>
             </Grid>
           </Grid>
