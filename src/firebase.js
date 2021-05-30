@@ -37,7 +37,7 @@ var firebaseConfig = {
   };
 
 //GET USER DATA
-  const getUserDocument = async uid => {
+export const getUserDocument = async uid => {
     if (!uid) return null;
     try {
       const userDocument = await firestore.doc(`admins/${uid}`).get();

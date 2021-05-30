@@ -8,7 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Title from './Title';
-import { firestore } from '../firebase';
+import { firestore, getUserDocument} from '../firebase';
+import { useAuth } from '../contexts/AuthContext'
+
 
 
 // Generate Order Data
@@ -31,8 +33,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Orders() {
-    const [rows,setRows] = useState([])
     
+    const {currentUser} = useAuth()
+    const [rows,setRows] = useState([])
+    var uid  = currentUser.uid
+    const [designation,setDesignation] = useState()
+    var getDesignation = async (uid) => {
+        var userData = await getUserDocument(uid)
+        console.log(userData)
+        setDesignation(userData.designation)
+        console.log(designation)
+    }
     var updateStatus = (id,status) => {
         firestore.collection('complaints').doc(id).update({
             status :"completed"
@@ -64,6 +75,7 @@ export default function Orders() {
         
     }
     useEffect(() => {
+        getDesignation(uid)
         getComplaints()
       }, [])
 
