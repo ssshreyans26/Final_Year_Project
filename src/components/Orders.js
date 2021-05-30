@@ -65,7 +65,8 @@ export default function Orders() {
                 if(!element.imageurl){
                     element.imageurl = "No Image Uploaded"
                 }
-                data.push(createData(element.id,element.time.toString(),element.emailid,element.category,element.description,element.status,element.imageurl))
+                var dt = element.time.toDate().toString().substring(0,24);
+                data.push(createData(element.id,dt,element.emailid,element.category,element.description,element.status,element.imageurl))
             });
             setRows(data)
           })
@@ -90,7 +91,7 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
+            <TableCell>Email</TableCell>
             <TableCell>Category</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Status</TableCell>

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Link from '@material-ui/core/Link';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
+import { firestore } from '../firebase'
 
 function preventDefault(event) {
   event.preventDefault();
 }
+
 
 const useStyles = makeStyles({
   depositContext: {
@@ -15,19 +18,35 @@ const useStyles = makeStyles({
 });
 
 export default function Deposits() {
-  const classes = useStyles();
+    const [noc,setNoc] = useState()
+    const getTotalComplaints = () => {
+        console.log("getTotalComplaints")
+ firestore.collection("complaints").get().then(snap => {
+   var size = snap.size // will return the collection size
+   setNoc(size)
+ });
+
+
+    }
+    
+    useEffect(() => {
+        getTotalComplaints()
+      }, [])
+
+
+const classes = useStyles();
   return (
     <React.Fragment>
-      <Title>Recent Deposits</Title>
+      <Title>Total Complaints</Title>
       <Typography component="p" variant="h4">
-        $3,024.00
+        {noc}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         on 15 March, 2019
       </Typography>
       <div>
         <Link color="primary" href="#" onClick={preventDefault}>
-          View balance
+          
         </Link>
       </div>
     </React.Fragment>
