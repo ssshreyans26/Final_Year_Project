@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -121,7 +121,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-  const { currentUser, logout} = useAuth()  
+  const { currentUser, logout} = useAuth() 
+  const [complaints,setComplaints] = useState() 
   const history = useHistory()
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -139,6 +140,12 @@ export default function Dashboard() {
     history.push('/signin')
   
   }
+
+
+
+
+
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -157,7 +164,7 @@ export default function Dashboard() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge onClick={(event) => {handleLogout(event)}} color="secondary">
+            <Badge color="secondary">
               <PowerSettingsNewOutlinedIcon/>
             </Badge>
           </IconButton>
