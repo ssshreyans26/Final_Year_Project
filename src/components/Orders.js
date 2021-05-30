@@ -14,8 +14,8 @@ import { useAuth } from '../contexts/AuthContext'
 
 
 // Generate Order Data
-function createData(id, date, name, category, description, status) {
-  return { id, date, name, category, description, status };
+function createData(id, date, name, category, description, status,imageurl) {
+  return { id, date, name, category, description, status,imageurl };
 }
 
 
@@ -62,7 +62,10 @@ export default function Orders() {
             console.log(tempDoc)
             var data = []
             tempDoc.forEach(element => {
-                data.push(createData(element.id,element.time.toString(),element.emailid,element.category,element.description,element.status))
+                if(!element.imageurl){
+                    element.imageurl = "No Image Uploaded"
+                }
+                data.push(createData(element.id,element.time.toString(),element.emailid,element.category,element.description,element.status,element.imageurl))
             });
             setRows(data)
           })
@@ -91,6 +94,7 @@ export default function Orders() {
             <TableCell>Category</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Status</TableCell>
+            <TableCell>Image Link</TableCell>
             <TableCell >Update Status</TableCell>
           </TableRow>
         </TableHead>
@@ -100,8 +104,15 @@ export default function Orders() {
               <TableCell>{row.date}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.category}</TableCell>
-              <TableCell>{row.description}</TableCell>
+              <TableCell>{row.description.substring(0,20)}</TableCell>
               <TableCell >{row.status}</TableCell>
+              
+              <TableCell>
+                  <Link href={row.imageurl} target="blank">
+                  Click Here 
+                  </Link>
+              
+              </TableCell>
               <TableCell>
               <Button variant="contained" color="primary" href="#contained-buttons"  onClick={() => {updateStatus(row.id,"completed")}}>
                 Completed
